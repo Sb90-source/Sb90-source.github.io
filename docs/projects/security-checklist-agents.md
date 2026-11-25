@@ -94,8 +94,9 @@ Een AI-agent scanners geven is op zich al een risico, dus de vangrails zitten in
 
 ## Volgende stappen
 
-- [ ] Het `source-only`-profiel draaien op de repository van deze website en het rapport publiceren
-- [ ] Een GitHub Action toevoegen zodat `source-only` bij elke push als CI-gate draait
+- [x] Het `source-only`-profiel draaien op de repository van deze website en het rapport publiceren: [Securityrapport van deze website](./securityrapport-website.md)
+- [x] Een GitHub Action toevoegen zodat `source-only` bij elke push als CI-gate draait
+- [ ] `secrets-scan.sh` laten falen met `ERROR` als gitleaks zelf niet goed draait
 - [ ] Bevindingen in het rapport koppelen aan control-ID's uit ISO/IEC 27002:2022
 
 Gerelateerd: [Portfoliowebsite](./portfolio-website.md)

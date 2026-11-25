@@ -14,3 +14,4 @@ Meer over mij: [Over mij](./over-mij.md).
 
 - [Portfoliowebsite](./projects/portfolio-website.md): deze site
 - [Security best-practices toolkit voor AI-agents](./projects/security-checklist-agents.md): een bibliotheek met verwijzingen naar standaarden (ISO 27001, NIST, OWASP, EU/NL-wetgeving) plus compliance checks waarmee AI-codeeragents een project beveiligen
+- [Securityrapport van deze website](./projects/securityrapport-website.md): de toolkit toegepast op deze site, met gevonden kwetsbaarheden en de oplossing

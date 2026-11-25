@@ -39,7 +39,8 @@ static/img/      pixel-art sprite en favicon
 - **Geen verzoeken naar derden.** Lettertypen worden met de site meegeleverd, er is geen analytics en geen externe JavaScript. De browser van een bezoeker praat alleen met GitHub Pages.
 - **Statische output.** Geen servercode, geen database, geen login: niets om te misbruiken behalve de hosting zelf.
 - **Externe links** openen met `rel="noopener noreferrer"`.
-- **Dependencies** staan vast in `package-lock.json`; `npm audit` draait vóór upgrades.
+- **Dependencies** staan vast in `package-lock.json`. Kwetsbare indirecte pakketten zijn met `overrides` naar gepatchte versies gezet (zie het [securityrapport](./securityrapport-website.md)).
+- **CI-gate.** Elke push draait dependency- en secret-scans met mijn eigen toolkit; de build faalt bij een bevinding of een overgeslagen check.
 
 ## Te doen
 

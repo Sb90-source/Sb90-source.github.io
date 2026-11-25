@@ -1,0 +1,84 @@
+name: Security checks (source-only)
+
+# Runs the source-only profile from Security-checklist-agents (dependency + secret
+# scanning) on every push and pull request. Fails on any FAIL, ERROR or SKIP:
+# a skipped check means "not verified", which is not good enough for a gate.
+#
+# All actions are pinned to a full commit SHA. Version tags can be moved; in March
+# 2026 the trivy-action and setup-trivy tags were force-pushed to malicious commits.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-only:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout site (full history for gitleaks)
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          path: site
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Require TOOLKIT_TOKEN
+        env:
+          TOOLKIT_TOKEN: ${{ secrets.TOOLKIT_TOKEN }}
+        run: |
+          if [ -z "$TOOLKIT_TOKEN" ]; then
+            echo "::error::Secret TOOLKIT_TOKEN ontbreekt. Maak een fine-grained token met alleen 'Contents: read' op Sb90-source/Security-checklist-agents en zet hem onder Settings > Secrets and variables > Actions."
+            exit 1
+          fi
+
+      - name: Checkout toolkit
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          repository: Sb90-source/Security-checklist-agents
+          token: ${{ secrets.TOOLKIT_TOKEN }}
+          path: toolkit
+          persist-credentials: false
+
+      - name: Install trivy (pinned)
+        uses: aquasecurity/setup-trivy@81e514348e19b6112ce2a7e3ecbafe19c1e1f567 # v0.3.1
+        with:
+          version: v0.76.2
+
+      - name: Install gitleaks and jq
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq gitleaks jq
+          trivy --version
+
+      - name: Run source-only profile
+        id: run
+        run: |
+          set +e
+          toolkit/compliance-checks/run-all.sh --profile source-only --source-dir "$GITHUB_WORKSPACE/site"
+          echo "exit=$?" >> "$GITHUB_OUTPUT"
+
+      - name: Report to job summary
+        if: always()
+        run: |
+          report="$(ls -t toolkit/reports/report-*.md 2>/dev/null | head -1)"
+          if [ -n "$report" ]; then
+            cat "$report" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "Geen rapport gevonden." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Gate (FAIL, ERROR or SKIP fails the build)
+        run: |
+          results="$(ls -t toolkit/reports/results-*.jsonl | head -1)"
+          bad="$(jq -r 'select(.severity=="SKIP" or .severity=="ERROR") | "\(.severity) \(.check): \(.message)"' "$results")"
+          if [ -n "$bad" ]; then
+            echo "::error::Niet alle checks zijn geverifieerd:"
+            echo "$bad"
+            exit 1
+          fi
+          exit "${{ steps.run.outputs.exit }}"
