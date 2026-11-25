@@ -21,7 +21,7 @@ export default function Home() {
   return (
     <Layout title="Home" description={siteConfig.tagline}>
       <main className={styles.hero}>
-        <img className={styles.sprite} src={sprite} alt="Pixel art of a retro computer" width="192" height="180" />
+        <img className={styles.sprite} src={sprite} alt="Pixel-art van een retro computer" width="192" height="180" />
         <h1 className={styles.name}>{siteConfig.title}</h1>
         <p className={styles.tagline}>{siteConfig.tagline}</p>
         <nav className={styles.buttons} aria-label="Links">

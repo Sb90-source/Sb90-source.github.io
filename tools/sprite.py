@@ -56,7 +56,7 @@ for row, (y, start) in enumerate([(24, 3), (25, 4), (26, 3)]):
         rect(x, y, x + 1, y, 'd'); x += 3
 
 def svg(animated=True, scale=1):
-    out = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W*scale}" height="{H*scale}" shape-rendering="crispEdges" role="img" aria-label="Pixel art of a retro computer">']
+    out = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W*scale}" height="{H*scale}" shape-rendering="crispEdges" role="img" aria-label="Pixel-art van een retro computer">']
     if animated:
         out.append('<style>@keyframes blink{50%{opacity:0}}.cur{animation:blink 1.1s steps(1) infinite}@media (prefers-reduced-motion:reduce){.cur{animation:none}}</style>')
     for c in P:

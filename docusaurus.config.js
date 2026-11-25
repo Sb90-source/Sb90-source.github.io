@@ -11,7 +11,7 @@ import {LINKS} from './src/links.js';
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'SB90-source',
-  tagline: 'Information security student. Notes, writeups and builds.',
+  tagline: 'Student informatiebeveiliging. Notities, writeups en projecten.',
   favicon: 'img/favicon.png',
 
   url: 'https://sb90-source.github.io',
@@ -23,7 +23,7 @@ const config = {
   onBrokenLinks: 'throw',
   markdown: {hooks: {onBrokenMarkdownLinks: 'warn'}},
 
-  i18n: {defaultLocale: 'en', locales: ['en']},
+  i18n: {defaultLocale: 'nl', locales: ['nl']},
 
   presets: [
     [
@@ -39,8 +39,8 @@ const config = {
         blog: {
           showReadingTime: true,
           blogTitle: 'Blog',
-          blogDescription: 'Progress notes and writeups',
-          blogSidebarTitle: 'Recent posts',
+          blogDescription: 'Voortgang en writeups',
+          blogSidebarTitle: 'Recente berichten',
           blogSidebarCount: 10,
           postsPerPage: 10,
           feedOptions: {type: ['rss', 'atom'], xslt: true},
@@ -68,7 +68,7 @@ const config = {
       },
       footer: {
         style: 'light',
-        copyright: `© ${new Date().getFullYear()} SB90-source. Built with Docusaurus.`,
+        copyright: `© ${new Date().getFullYear()} SB90-source. Gebouwd met Docusaurus.`,
       },
       prism: {
         theme: prismThemes.github,

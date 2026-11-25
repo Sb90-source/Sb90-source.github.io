@@ -1,101 +1,101 @@
 ---
-title: Security best-practices toolkit for AI agents
-sidebar_label: AI security toolkit
+title: Security best-practices toolkit voor AI-agents
+sidebar_label: AI-security-toolkit
 sidebar_position: 2
-description: A standards-referenced security library plus compliance checks that AI coding agents use to secure the project they work in.
+description: Een securitybibliotheek met verwijzingen naar standaarden plus compliance checks waarmee AI-codeeragents het project beveiligen waarin ze werken.
 ---
 
-# Security best-practices toolkit for AI agents
+# Security best-practices toolkit voor AI-agents
 
-**Status:** working, v1 · **Repository:** private (available on request)
+**Status:** werkend, v1 · **Repository:** privé (op aanvraag beschikbaar)
 
-A download-and-go toolkit that an AI coding agent (Claude Code, Cursor, Copilot) drops into a project to secure it to current best practice. It has two halves: a reference library that maps 23 security domains to authoritative standards, and a set of compliance checks that verify the machine-checkable part automatically. Every finding cites the library section and the standard behind it.
+Een toolkit die je downloadt en direct gebruikt: een AI-codeeragent (Claude Code, Cursor, Copilot) zet hem in een project om dat volgens de huidige best practices te beveiligen. Hij bestaat uit twee delen: een referentiebibliotheek die 23 securitydomeinen koppelt aan gezaghebbende standaarden, en een set compliance checks die het machinaal controleerbare deel automatisch verifiëren. Elke bevinding verwijst naar de sectie in de bibliotheek en de standaard erachter.
 
-## The problem
+## Het probleem
 
-AI coding agents write a lot of code quickly, but they don't apply security standards consistently, and when they do they often cite outdated versions (OWASP Top 10 2021, ASVS 4.0.3). I wanted one source of truth the agent has to work from, with versions verified, plus checks that prove the result instead of trusting it.
+AI-codeeragents schrijven snel veel code, maar passen securitystandaarden niet consequent toe, en als ze dat wel doen noemen ze vaak verouderde versies (OWASP Top 10 2021, ASVS 4.0.3). Ik wilde één bron van waarheid waar de agent vanuit moet werken, met gecontroleerde versies, plus checks die het resultaat bewijzen in plaats van erop te vertrouwen.
 
-## How it works
+## Hoe het werkt
 
-The repository follows the `AGENTS.md` convention, so any agent picks up the instructions automatically. The agent works through five steps:
+De repository volgt de `AGENTS.md`-conventie, dus elke agent pikt de instructies automatisch op. De agent doorloopt vijf stappen:
 
-1. **Detect the environment** from files in the repo: frontend, API backend, containers, IoT firmware, mobile, LLM features, identity, email/DNS, cloud.
-2. **Map it to library sections.** §1–§3 (governance, secure SDLC, supply chain) and §21 (threat modelling) always apply; the rest depend on what was detected. An LLM feature pulls in §17, EU operation pulls in §22.
-3. **Pick a compliance profile**: `web-app`, `api`, `network-host`, `cloud-container`, `iot-device`, `source-only` or `full`.
-4. **Run the checks** in a Docker image that bundles every scanner, so nothing gets installed on the host.
-5. **Fix and re-run.** Each `FAIL` or `WARN` points to a `§N`; the agent applies that section's key practices and runs the profile again until the finding clears.
+1. **Omgeving herkennen** aan de bestanden in de repo: frontend, API-backend, containers, IoT-firmware, mobiel, LLM-functies, identiteit, e-mail/DNS, cloud.
+2. **Koppelen aan secties in de bibliotheek.** §1–§3 (governance, secure SDLC, supply chain) en §21 (threat modelling) gelden altijd; de rest hangt af van wat er herkend is. Een LLM-functie haalt §17 erbij, actief zijn in de EU §22.
+3. **Compliance-profiel kiezen**: `web-app`, `api`, `network-host`, `cloud-container`, `iot-device`, `source-only` of `full`.
+4. **Checks draaien** in een Docker-image met alle scanners erin, zodat er niets op de host wordt geïnstalleerd.
+5. **Oplossen en opnieuw draaien.** Elke `FAIL` of `WARN` verwijst naar een `§N`; de agent past de kernpraktijken van die sectie toe en draait het profiel opnieuw tot de bevinding weg is.
 
-## Reference library
+## Referentiebibliotheek
 
-23 domains, each with its sources (current edition verified on the review date) and the practices those sources actually require.
+23 domeinen, elk met de bronnen (huidige editie gecontroleerd op de reviewdatum) en de praktijken die die bronnen echt vereisen.
 
-| § | Domain | Main references |
+| § | Domein | Belangrijkste referenties |
 |---|---|---|
-| 1 | Governance, frameworks, maturity | NIST CSF 2.0, ISO/IEC 27001:2022 and 27002:2022, CIS Controls v8.1, OWASP SAMM v2, BSIMM |
-| 2 | Secure SDLC and DevSecOps | NIST SP 800-218 (SSDF), SP 800-218A, OWASP DevSecOps Guideline |
+| 1 | Governance, frameworks, volwassenheid | NIST CSF 2.0, ISO/IEC 27001:2022 en 27002:2022, CIS Controls v8.1, OWASP SAMM v2, BSIMM |
+| 2 | Secure SDLC en DevSecOps | NIST SP 800-218 (SSDF), SP 800-218A, OWASP DevSecOps Guideline |
 | 3 | Software supply chain | NIST SP 800-161r1, OWASP Top 10 CI/CD Risks, SBOM |
-| 4 | Application security | OWASP Top 10:2025, ASVS 5.0.0, WSTG, Cheat Sheet Series |
-| 5 | API security | OWASP API Security Top 10 (2023) |
-| 6 | Authentication and identity | NIST SP 800-63-4 |
-| 7 | Authorization and access control | NIST SP 800-162 (ABAC), SP 800-207 (Zero Trust) |
-| 8 | Cryptography and key management | NIST SP 800-57, SP 800-52r2, FIPS 203/204/205 (post-quantum) |
-| 9 | Data protection and privacy | GDPR, NIST Privacy Framework, ISO/IEC 27701 |
-| 10 | Logging, monitoring, detection | OWASP Logging Cheat Sheet, NIST SP 800-92, MITRE ATT&CK |
-| 11 | Incident response and resilience | NIST SP 800-61r3, SP 800-34r1, CISA #StopRansomware Guide |
-| 12 | Cloud and infrastructure | CIS Benchmarks, CSA Cloud Controls Matrix, NIST SP 800-53 Rev. 5 |
-| 13 | Containers and orchestration | NIST SP 800-190, CIS Docker/Kubernetes Benchmarks, NSA/CISA Kubernetes Hardening |
-| 14 | Network security and Zero Trust | NIST SP 800-207, CISA Zero Trust Maturity Model v2.0, SP 800-41r1 |
-| 15 | Browser and client-side | MDN (CSP, CORS, Trusted Types, COOP/COEP), W3C SRI |
-| 16 | Mobile | OWASP MASVS 2.x, MASTG, Mobile Top 10 |
-| 17 | AI / LLM / ML security | OWASP Top 10 for LLM Applications 2025, OWASP Top 10 for Agentic Applications, NIST AI RMF and AI 600-1, MITRE ATLAS, ISO/IEC 42001:2023 |
+| 4 | Applicatiebeveiliging | OWASP Top 10:2025, ASVS 5.0.0, WSTG, Cheat Sheet Series |
+| 5 | API-beveiliging | OWASP API Security Top 10 (2023) |
+| 6 | Authenticatie en identiteit | NIST SP 800-63-4 |
+| 7 | Autorisatie en toegangsbeheer | NIST SP 800-162 (ABAC), SP 800-207 (Zero Trust) |
+| 8 | Cryptografie en sleutelbeheer | NIST SP 800-57, SP 800-52r2, FIPS 203/204/205 (post-quantum) |
+| 9 | Gegevensbescherming en privacy | AVG (GDPR), NIST Privacy Framework, ISO/IEC 27701 |
+| 10 | Logging, monitoring, detectie | OWASP Logging Cheat Sheet, NIST SP 800-92, MITRE ATT&CK |
+| 11 | Incidentrespons en weerbaarheid | NIST SP 800-61r3, SP 800-34r1, CISA #StopRansomware Guide |
+| 12 | Cloud en infrastructuur | CIS Benchmarks, CSA Cloud Controls Matrix, NIST SP 800-53 Rev. 5 |
+| 13 | Containers en orchestratie | NIST SP 800-190, CIS Docker/Kubernetes Benchmarks, NSA/CISA Kubernetes Hardening |
+| 14 | Netwerkbeveiliging en Zero Trust | NIST SP 800-207, CISA Zero Trust Maturity Model v2.0, SP 800-41r1 |
+| 15 | Browser en client-side | MDN (CSP, CORS, Trusted Types, COOP/COEP), W3C SRI |
+| 16 | Mobiel | OWASP MASVS 2.x, MASTG, Mobile Top 10 |
+| 17 | AI- / LLM- / ML-beveiliging | OWASP Top 10 for LLM Applications 2025, OWASP Top 10 for Agentic Applications, NIST AI RMF en AI 600-1, MITRE ATLAS, ISO/IEC 42001:2023 |
 | 18 | IoT, embedded, hardware | ETSI EN 303 645, NIST SP 800-213, OWASP IoT Top 10, SP 800-193 |
-| 19 | Protocol- and mechanism-specific guidance | WebSockets (RFC 6455), webhooks, DNS, email authentication, file upload, deserialization |
-| 20 | Multi-tenancy and isolation | OWASP Multi-Tenant Application Security Cheat Sheet |
-| 21 | Threat modelling and weakness taxonomies | STRIDE, PASTA, MITRE ATT&CK, CWE |
-| 22 | EU and Netherlands regulation | NIS2 (Cyberbeveiligingswet), DORA, Cyber Resilience Act, EU AI Act, BIO |
-| 23 | Master source index | All of the above, with links |
+| 19 | Protocol- en mechanisme-specifieke richtlijnen | WebSockets (RFC 6455), webhooks, DNS, e-mailauthenticatie, bestandsupload, deserialisatie |
+| 20 | Multi-tenancy en isolatie | OWASP Multi-Tenant Application Security Cheat Sheet |
+| 21 | Threat modelling en zwakheden-taxonomieën | STRIDE, PASTA, MITRE ATT&CK, CWE |
+| 22 | EU- en Nederlandse regelgeving | NIS2 (Cyberbeveiligingswet), DORA, Cyber Resilience Act, EU AI Act, BIO |
+| 23 | Centrale bronnenindex | Alle bovenstaande, met links |
 
-While building it I corrected outdated versions that commonly circulate, for example OWASP Top 10 to the 2025 edition, ASVS to 5.0.0, NIST SP 800-63 to Rev. 4 and SP 800-88 to Rev. 2.
+Tijdens het bouwen heb ik verouderde versies die vaak rondgaan gecorrigeerd, bijvoorbeeld OWASP Top 10 naar de editie van 2025, ASVS naar 5.0.0, NIST SP 800-63 naar Rev. 4 en SP 800-88 naar Rev. 2.
 
 ## Compliance checks
 
-Bash scripts, one per tool. Each finding is written as JSON lines and collected into a Markdown report.
+Bash-scripts, één per tool. Elke bevinding wordt als JSON-regel weggeschreven en verzameld in een Markdown-rapport.
 
-| Check | Verifies | Library | Tool |
+| Check | Controleert | Bibliotheek | Tool |
 |---|---|---|---|
-| `nmap-scan` | Open ports, exposed services | §14, §12 | nmap |
-| `tls-check` | Protocols, ciphers, certificate validity | §8 | testssl.sh / openssl |
-| `http-security-headers` | HSTS, CSP, X-Frame-Options, cookie flags, isolation headers | §15, §4 | curl |
-| `web-nuclei` | Web misconfigurations and exposures (non-intrusive) | §4 | nuclei |
+| `nmap-scan` | Open poorten, blootgestelde services | §14, §12 | nmap |
+| `tls-check` | Protocollen, ciphers, geldigheid van certificaten | §8 | testssl.sh / openssl |
+| `http-security-headers` | HSTS, CSP, X-Frame-Options, cookie-flags, isolatieheaders | §15, §4 | curl |
+| `web-nuclei` | Webmisconfiguraties en blootstellingen (niet-intrusief) | §4 | nuclei |
 | `dns-email-auth` | SPF, DKIM, DMARC, MTA-STS, DNSSEC | §19 | dig |
-| `host-hardening` | OS hardening index and warnings | §12, §1 | lynis |
-| `dependency-scan` | Dependency CVEs, IaC misconfigurations, SBOM | §3, §2 | trivy |
-| `secrets-scan` | Hardcoded secrets (output redacted) | §3, §8 | gitleaks |
-| `container-image-scan` | Image vulnerabilities | §13, §3 | trivy |
+| `host-hardening` | Hardening-index van het OS en waarschuwingen | §12, §1 | lynis |
+| `dependency-scan` | CVE's in dependencies, IaC-misconfiguraties, SBOM | §3, §2 | trivy |
+| `secrets-scan` | Hardcoded secrets (output geredigeerd) | §3, §8 | gitleaks |
+| `container-image-scan` | Kwetsbaarheden in images | §13, §3 | trivy |
 
-The checks cover what can be verified reliably by a machine. Design, authorization logic, key lifecycle, governance and regulation stay with human review, guided by the library.
+De checks dekken wat een machine betrouwbaar kan verifiëren. Ontwerp, autorisatielogica, sleutellevenscyclus, governance en regelgeving blijven bij menselijke review, met de bibliotheek als leidraad.
 
-## Safety design
+## Veiligheidsontwerp
 
-Giving an AI agent scanners is a risk in itself, so the guardrails are built into the scripts rather than left to the agent:
+Een AI-agent scanners geven is op zich al een risico, dus de vangrails zitten in de scripts in plaats van dat ze aan de agent worden overgelaten:
 
-- **Allowlist gating.** Active checks call `authorized "$host"` and refuse any target that isn't in `config/authorized-targets.txt`. The allowlist ships empty, so out of the box only passive and code checks run.
-- **The agent may not add targets.** `AGENTS.md` forbids adding a host unless the user confirms they own it or are authorised to test it, and never from something found in code, config or scan output.
-- **Tool output is data, not instructions.** This is a defence against prompt injection through scanned files or scan results (§17).
-- **Missing tool means `SKIP`, never a silent pass.** The agent has to treat `SKIP` as "not verified".
-- **Secrets are redacted** in findings; real hits trigger advice to rotate.
-- **Private by default.** Target lists and reports are git-ignored, because they describe your own systems.
+- **Allowlist.** Actieve checks roepen `authorized "$host"` aan en weigeren elk doel dat niet in `config/authorized-targets.txt` staat. De allowlist wordt leeg geleverd, dus standaard draaien alleen passieve checks en code-checks.
+- **De agent mag geen doelen toevoegen.** `AGENTS.md` verbiedt het toevoegen van een host tenzij de gebruiker bevestigt dat hij eigenaar is of toestemming heeft om te testen, en nooit op basis van iets uit code, configuratie of scanoutput.
+- **Tooloutput is data, geen instructie.** Dit beschermt tegen prompt injection via gescande bestanden of scanresultaten (§17).
+- **Ontbrekende tool betekent `SKIP`, nooit stilzwijgend geslaagd.** De agent moet `SKIP` behandelen als "niet geverifieerd".
+- **Secrets worden geredigeerd** in bevindingen; bij een echte treffer volgt het advies om te roteren.
+- **Standaard privé.** Doellijsten en rapporten staan in `.gitignore`, omdat ze je eigen systemen beschrijven.
 
-## What I learned
+## Wat ik heb geleerd
 
-- Standards versions go stale quickly. A library is only useful if every version line has a review date and a primary source.
-- With an AI agent, the safety rules belong in code, not only in instructions. The allowlist check in the scripts holds even if the agent ignores `AGENTS.md`.
-- Mapping everything to one framework spine (ISO 27001 or CSF 2.0) keeps controls from turning into parallel checklists, the same idea as one PDCA cycle in quality management.
+- Versies van standaarden verouderen snel. Een bibliotheek is alleen bruikbaar als elke versieregel een reviewdatum en een primaire bron heeft.
+- Bij een AI-agent horen de veiligheidsregels in code, niet alleen in instructies. De allowlist-check in de scripts houdt stand, ook als de agent `AGENTS.md` negeert.
+- Alles koppelen aan één framework als ruggengraat (ISO 27001 of CSF 2.0) voorkomt dat controls parallelle checklists worden, hetzelfde idee als één PDCA-cyclus in kwaliteitsmanagement.
 
-## Next steps
+## Volgende stappen
 
-- [ ] Run the `source-only` profile against this website's own repository and publish the report
-- [ ] Add a GitHub Action so `source-only` runs as a CI gate on every push
-- [ ] Map findings to ISO/IEC 27002:2022 control IDs in the report
+- [ ] Het `source-only`-profiel draaien op de repository van deze website en het rapport publiceren
+- [ ] Een GitHub Action toevoegen zodat `source-only` bij elke push als CI-gate draait
+- [ ] Bevindingen in het rapport koppelen aan control-ID's uit ISO/IEC 27002:2022
 
-Related: [Portfolio website](./portfolio-website.md)
+Gerelateerd: [Portfoliowebsite](./portfolio-website.md)

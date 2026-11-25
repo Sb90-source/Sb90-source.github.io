@@ -1,49 +1,49 @@
 ---
-title: Portfolio website
+title: Portfoliowebsite
 sidebar_position: 1
-description: How this site is built, hosted and secured.
+description: Hoe deze site is gebouwd, gehost en beveiligd.
 ---
 
-# Portfolio website
+# Portfoliowebsite
 
-**Status:** in progress
+**Status:** in uitvoering
 
-This site: a landing page, a wiki for project documentation and a blog for progress notes.
+Deze site: een landingspagina, een wiki voor projectdocumentatie en een blog voor voortgang.
 
-## Goal
+## Doel
 
-One place to document every project, readable by a recruiter in a minute and detailed enough for a technical reviewer.
+Eén plek om elk project te documenteren, in een minuut te lezen voor een recruiter en gedetailleerd genoeg voor een technische beoordelaar.
 
 ## Stack
 
-| Part | Choice | Why |
+| Onderdeel | Keuze | Waarom |
 |---|---|---|
-| Site generator | [Docusaurus](https://docusaurus.io) | Wiki (docs), blog and custom pages built in, actively maintained |
-| Content | Markdown in Git | Every change is versioned and reviewable |
-| Hosting | GitHub Pages | Free, HTTPS by default |
-| Deploy | GitHub Actions | Every push to `main` builds and publishes |
-| Fonts | Departure Mono, IBM Plex Sans | Self-hosted, no requests to font CDNs |
+| Sitegenerator | [Docusaurus](https://docusaurus.io) | Wiki (docs), blog en eigen pagina's ingebouwd, actief onderhouden |
+| Content | Markdown in Git | Elke wijziging is geversioneerd en te reviewen |
+| Hosting | GitHub Pages | Gratis, standaard HTTPS |
+| Deploy | GitHub Actions | Elke push naar `main` wordt gebouwd en gepubliceerd |
+| Lettertypen | Departure Mono, IBM Plex Sans | Zelf gehost, geen verzoeken naar font-CDN's |
 
-## Structure
+## Structuur
 
 ```text
-docs/            wiki pages (sidebar generated from folders)
-blog/            blog posts, one file per post
-src/pages/       landing page
-src/links.js     GitHub and LinkedIn links
-static/img/      pixel-art sprite and favicon
+docs/            wikipagina's (zijbalk gegenereerd uit mappen)
+blog/            blogberichten, één bestand per bericht
+src/pages/       landingspagina
+src/links.js     GitHub- en LinkedIn-links
+static/img/      pixel-art sprite en favicon
 ```
 
-## Security and privacy decisions
+## Beslissingen over beveiliging en privacy
 
-- **No third-party requests.** Fonts are bundled with the site, there is no analytics and no external JavaScript. A visitor's browser only talks to GitHub Pages.
-- **Static output.** No server-side code, no database, no login: nothing to exploit beyond the hosting itself.
-- **External links** open with `rel="noopener noreferrer"`.
-- **Dependencies** are pinned in `package-lock.json`; `npm audit` runs before upgrades.
+- **Geen verzoeken naar derden.** Lettertypen worden met de site meegeleverd, er is geen analytics en geen externe JavaScript. De browser van een bezoeker praat alleen met GitHub Pages.
+- **Statische output.** Geen servercode, geen database, geen login: niets om te misbruiken behalve de hosting zelf.
+- **Externe links** openen met `rel="noopener noreferrer"`.
+- **Dependencies** staan vast in `package-lock.json`; `npm audit` draait vóór upgrades.
 
-## To do
+## Te doen
 
-- [x] Landing page, wiki and blog
-- [ ] Deploy to GitHub Pages
-- [ ] Add LinkedIn link
-- [ ] First full project writeup
+- [x] Landingspagina, wiki en blog
+- [ ] Deployen naar GitHub Pages
+- [ ] LinkedIn-link toevoegen
+- [ ] Eerste volledige project-writeup

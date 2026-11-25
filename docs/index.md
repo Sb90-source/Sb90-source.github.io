@@ -6,9 +6,11 @@ title: Wiki
 
 # Wiki
 
-Documentation for the things I build: what each project is, how it is set up, what went wrong and what I learned. Progress notes and shorter writeups go on the [blog](/blog).
+Documentatie van wat ik bouw: wat elk project is, hoe het is opgezet, wat er misging en wat ik heb geleerd. Voortgang en kortere writeups staan op de [blog](/blog).
 
-## Projects
+Meer over mij: [Over mij](./over-mij.md).
 
-- [Portfolio website](./projects/portfolio-website.md): this site
-- [Security best-practices toolkit for AI agents](./projects/security-checklist-agents.md): a standards-referenced library (ISO 27001, NIST, OWASP, EU/NL regulation) plus compliance checks that AI coding agents use to secure a project
+## Projecten
+
+- [Portfoliowebsite](./projects/portfolio-website.md): deze site
+- [Security best-practices toolkit voor AI-agents](./projects/security-checklist-agents.md): een bibliotheek met verwijzingen naar standaarden (ISO 27001, NIST, OWASP, EU/NL-wetgeving) plus compliance checks waarmee AI-codeeragents een project beveiligen

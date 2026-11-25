@@ -1,17 +1,17 @@
 ---
 slug: hello-world
-title: Starting this site
+title: Start van deze site
 authors: [sb90]
 tags: [meta]
 ---
 
-I'm working through a list of hands-on security projects and documenting each one here. The list comes from the video [20 God-Tier Cybersecurity Projects That Will Get You Hired](https://www.youtube.com/watch?v=mtVUHLUPzZI) by Mad Hat.
+Ik werk een lijst met praktische securityprojecten af en documenteer ze hier één voor één.
 
 <!-- truncate -->
 
-## How it's organised
+## Hoe het in elkaar zit
 
-- **[Wiki](/wiki):** one page per project with the setup, results and lessons learned.
-- **Blog:** progress notes along the way.
+- **[Wiki](/wiki):** één pagina per project met de opzet, resultaten en lessen.
+- **Blog:** voortgang onderweg.
 
-The first project is this site itself; the details are on its [wiki page](/wiki/projects/portfolio-website).
+Het eerste project is deze site zelf; de details staan op de [wikipagina](/wiki/projects/portfolio-website).
