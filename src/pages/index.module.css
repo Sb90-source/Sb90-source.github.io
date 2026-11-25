@@ -1,0 +1,80 @@
+.hero {
+  min-height: calc(100vh - var(--ifm-navbar-height) - 120px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 64px 20px 80px;
+}
+
+.sprite {
+  width: 192px;
+  height: auto;
+  image-rendering: pixelated;
+  margin-bottom: 32px;
+}
+
+.name {
+  font-size: 44px;
+  line-height: 1.1;
+  margin: 0 0 12px;
+  letter-spacing: 0;
+}
+
+.tagline {
+  font-size: 17px;
+  color: var(--site-muted);
+  max-width: 40ch;
+  margin: 0 0 36px;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* Flat buttons with notched "pixel" corners. */
+.btn {
+  --notch: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 0 20px;
+  font-family: var(--ifm-heading-font-family);
+  font-size: 15px;
+  color: var(--ifm-font-color-base);
+  background: var(--ifm-background-color);
+  border: 2px solid var(--ifm-font-color-base);
+  clip-path: polygon(
+    var(--notch) 0, calc(100% - var(--notch)) 0, 100% var(--notch), 100% calc(100% - var(--notch)),
+    calc(100% - var(--notch)) 100%, var(--notch) 100%, 0 calc(100% - var(--notch)), 0 var(--notch)
+  );
+  text-decoration: none;
+}
+
+.btn:hover,
+.solid {
+  color: var(--ifm-background-color);
+  background: var(--ifm-font-color-base);
+  text-decoration: none;
+}
+
+.solid:hover {
+  color: var(--ifm-background-color);
+  background: var(--ifm-color-primary-darkest);
+  border-color: var(--ifm-color-primary-darkest);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--ifm-color-primary);
+  outline-offset: 3px;
+}
+
+@media (max-width: 480px) {
+  .name { font-size: 33px; }
+  .sprite { width: 144px; }
+}
